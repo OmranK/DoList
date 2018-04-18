@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8E7B910CE7C2B6196AE92399 /* Pods_DoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA8810CF5D677859C174A9B /* Pods_DoList.framework */; };
-		B7B946372085BACA00100940 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B7B946352085BACA00100940 /* DataModel.xcdatamodeld */; };
 		B7B9465A2085E08800100940 /* ListsBinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B946592085E08800100940 /* ListsBinderViewController.swift */; };
+		B7B9465E20868FC800100940 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B9465D20868FC800100940 /* ToDoItem.swift */; };
+		B7B9466020868FE000100940 /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B9465F20868FE000100940 /* ToDoList.swift */; };
 		B7F946C22065BE8D00B30282 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F946C12065BE8D00B30282 /* AppDelegate.swift */; };
 		B7F946C42065BE8D00B30282 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F946C32065BE8D00B30282 /* ToDoListViewController.swift */; };
 		B7F946C72065BE8D00B30282 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7F946C52065BE8D00B30282 /* Main.storyboard */; };
@@ -19,8 +20,9 @@
 
 /* Begin PBXFileReference section */
 		383DD1E3B83FABCDE521BCA1 /* Pods-DoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoList.release.xcconfig"; path = "Pods/Target Support Files/Pods-DoList/Pods-DoList.release.xcconfig"; sourceTree = "<group>"; };
-		B7B946362085BACA00100940 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B7B946592085E08800100940 /* ListsBinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsBinderViewController.swift; sourceTree = "<group>"; };
+		B7B9465D20868FC800100940 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		B7B9465F20868FE000100940 /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		B7F946BE2065BE8D00B30282 /* DoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F946C12065BE8D00B30282 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7F946C32065BE8D00B30282 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +58,8 @@
 		B779E3B3206A18BF00BCCE77 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B7B946352085BACA00100940 /* DataModel.xcdatamodeld */,
+				B7B9465F20868FE000100940 /* ToDoList.swift */,
+				B7B9465D20868FC800100940 /* ToDoItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,8 +262,9 @@
 			files = (
 				B7B9465A2085E08800100940 /* ListsBinderViewController.swift in Sources */,
 				B7F946C42065BE8D00B30282 /* ToDoListViewController.swift in Sources */,
-				B7B946372085BACA00100940 /* DataModel.xcdatamodeld in Sources */,
+				B7B9465E20868FC800100940 /* ToDoItem.swift in Sources */,
 				B7F946C22065BE8D00B30282 /* AppDelegate.swift in Sources */,
+				B7B9466020868FE000100940 /* ToDoList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,19 +455,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		B7B946352085BACA00100940 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B7B946362085BACA00100940 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = B7B946362085BACA00100940 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = B7F946B62065BE8D00B30282 /* Project object */;
 }

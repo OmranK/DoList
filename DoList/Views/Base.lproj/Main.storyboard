@@ -83,7 +83,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4io-BT-nmy">
                             <color key="tintColor" red="0.9949798829625579" green="0.91231105970589055" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="addButtonTapped:" destination="csH-Xz-4Xx" id="Rlt-kY-Yb6"/>
+                                <action selector="addButtonTapped:" destination="csH-Xz-4Xx" id="OTB-HC-0Mc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

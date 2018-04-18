@@ -7,33 +7,32 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ListsBinderViewController: UITableViewController {
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try! Realm()
 
-    var listsArray = [List]()
+    var listsArray: Results<ToDoList>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadLists()
-
     }
     
   
     //MARK: - TableView Datasource Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listsArray.count
+        return listsArray?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListCategoryCell", for: indexPath)
-        let list = listsArray[indexPath.row]
-        cell.textLabel?.text = list.name
+        cell.textLabel?.text = listsArray?[indexPath.row].name ?? "No Lists Created Yet"
         return cell
     }
+    
     
     //MARK: - TableView Delegate Methods
     
@@ -45,51 +44,49 @@ class ListsBinderViewController: UITableViewController {
         let destinationVC = segue.destination as! ToDoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedList = listsArray[indexPath.row]
+            destinationVC.selectedList = listsArray?[indexPath.row]
+            destinationVC.title = listsArray?[indexPath.row].name
         }
+        
     }
+    
     
     //MARK: - Data Manipulation Methods
     
-    func saveLists() {
+    func save(list: ToDoList) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(list)
+            }
         } catch {
             print("Error saving List to Binder \(error)")
         }
-        
         tableView.reloadData()
     }
     
-    func loadLists(with request: NSFetchRequest<List> = List.fetchRequest()) {
-        do {
-            listsArray = try context.fetch(request)
-        } catch {
-            print("Error loading Lists from context \(error)")
-        }
-        
+    func loadLists() {
+        listsArray = realm.objects(ToDoList.self)
         tableView.reloadData()
     }
+    
     
     //MARK: - Add New List
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Create New List", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add List", style: .default)
+        let action = UIAlertAction(title: "Add", style: .default)
         { (action) in
             guard textField.text != "" else { return }
             
-            let newList = List(context: self.context)
+            let newList = ToDoList()
             newList.name = textField.text!
-            self.listsArray.append(newList)
-            self.saveLists()
-            self.tableView.reloadData()
+            
+            self.save(list: newList)
+            
         }
         
-        
         alert.addAction(action)
-        
         alert.addTextField { (field) in
             textField.placeholder = "Create New List"
             textField = field
