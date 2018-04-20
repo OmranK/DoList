@@ -11,6 +11,7 @@
 		B7B9465A2085E08800100940 /* ListsBinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B946592085E08800100940 /* ListsBinderViewController.swift */; };
 		B7B9465E20868FC800100940 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B9465D20868FC800100940 /* ToDoItem.swift */; };
 		B7B9466020868FE000100940 /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B9465F20868FE000100940 /* ToDoList.swift */; };
+		B7CF8F612089439200A86C01 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CF8F602089439200A86C01 /* SwipeTableViewController.swift */; };
 		B7F946C22065BE8D00B30282 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F946C12065BE8D00B30282 /* AppDelegate.swift */; };
 		B7F946C42065BE8D00B30282 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F946C32065BE8D00B30282 /* ToDoListViewController.swift */; };
 		B7F946C72065BE8D00B30282 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7F946C52065BE8D00B30282 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		B7B946592085E08800100940 /* ListsBinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsBinderViewController.swift; sourceTree = "<group>"; };
 		B7B9465D20868FC800100940 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 		B7B9465F20868FE000100940 /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
+		B7CF8F602089439200A86C01 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		B7F946BE2065BE8D00B30282 /* DoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F946C12065BE8D00B30282 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7F946C32065BE8D00B30282 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				B7B946592085E08800100940 /* ListsBinderViewController.swift */,
 				B7F946C32065BE8D00B30282 /* ToDoListViewController.swift */,
+				B7CF8F602089439200A86C01 /* SwipeTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -141,7 +144,6 @@
 				B7F946BB2065BE8D00B30282 /* Frameworks */,
 				B7F946BC2065BE8D00B30282 /* Resources */,
 				D57FA97F8616C7D7B7A6DAE6 /* [CP] Embed Pods Frameworks */,
-				152ECB529ADF5F02DA19F5C4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,21 +220,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		152ECB529ADF5F02DA19F5C4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DoList/Pods-DoList-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D57FA97F8616C7D7B7A6DAE6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -240,13 +227,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DoList/Pods-DoList-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -264,6 +255,7 @@
 				B7F946C42065BE8D00B30282 /* ToDoListViewController.swift in Sources */,
 				B7B9465E20868FC800100940 /* ToDoItem.swift in Sources */,
 				B7F946C22065BE8D00B30282 /* AppDelegate.swift in Sources */,
+				B7CF8F612089439200A86C01 /* SwipeTableViewController.swift in Sources */,
 				B7B9466020868FE000100940 /* ToDoList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

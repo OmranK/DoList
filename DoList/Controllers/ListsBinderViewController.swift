@@ -8,8 +8,12 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class ListsBinderViewController: UITableViewController {
+class ListsBinderViewController: SwipeTableViewController {
+    
+    var colorArray = NSArray(ofColorsWith: ColorScheme.complementary, using: FlatMint(), withFlatScheme: true)
+    let colors: [UIColor] = [FlatPowderBlue(), FlatMint(), FlatGreen(), FlatLime(), FlatWatermelon()]
     
     let realm = try! Realm()
 
@@ -17,7 +21,9 @@ class ListsBinderViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.separatorStyle = .none
         loadLists()
+        
     }
     
   
@@ -28,8 +34,11 @@ class ListsBinderViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCategoryCell", for: indexPath)
-        cell.textLabel?.text = listsArray?[indexPath.row].name ?? "No Lists Created Yet"
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let list = listsArray?[indexPath.row] {
+            cell.textLabel?.text = list.name
+            cell.backgroundColor = UIColor(hexString: list.cellColor)
+        }
         return cell
     }
     
@@ -51,7 +60,7 @@ class ListsBinderViewController: UITableViewController {
     }
     
     
-    //MARK: - Data Manipulation Methods
+    //MARK: - Data Manipulation Methods - Save, Load, Delete
     
     func save(list: ToDoList) {
         do {
@@ -69,6 +78,22 @@ class ListsBinderViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // delete
+    override func updateModel(at indexPath: IndexPath) {
+        
+        super.updateModel(at: indexPath)
+        
+        if let item = self.listsArray?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(item)
+                }
+            } catch {
+                print("Error deleting To Do List \(error)")
+            }
+        }
+    }
+    
     
     //MARK: - Add New List
     
@@ -76,11 +101,19 @@ class ListsBinderViewController: UITableViewController {
         var textField = UITextField()
         let alert = UIAlertController(title: "Create New List", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default)
+       
         { (action) in
             guard textField.text != "" else { return }
             
             let newList = ToDoList()
             newList.name = textField.text!
+            print(self.listsArray?.count)
+            if let indexPath = self.listsArray?.count {
+                let colorNumber = (indexPath % 5)
+                let color = self.colors[colorNumber]
+                newList.cellColor = color.hexValue()
+            }
+            
             
             self.save(list: newList)
             
