@@ -12,6 +12,8 @@ import ChameleonFramework
 
 class ToDoListViewController: SwipeTableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var toDoItems: Results<ToDoItem>?
     let realm = try! Realm()
     var selectedList : ToDoList? {
@@ -23,8 +25,30 @@ class ToDoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedList?.name
+        guard let colorHex = selectedList?.cellColor else {fatalError()}
+        updateNavBar(withHexCode: colorHex)
         
+    }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        updateNavBar(withHexCode: "1D9BF6")
+//    }
+    
+    
+    //MARK: - Nav Bar Setup Method
+    
+    func updateNavBar(withHexCode colorHexCode: String) {
+        guard let navBar = navigationController?.navigationBar else {fatalError("NavBar does not exist.")}
         
+        guard let uiColor = UIColor(hexString: colorHexCode) else {fatalError()}
+        navBar.barTintColor = uiColor
+        navBar.tintColor = ContrastColorOf(uiColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(uiColor, returnFlat: true)]
+        searchBar.barTintColor = uiColor
     }
     
     
@@ -40,7 +64,7 @@ class ToDoListViewController: SwipeTableViewController {
         if let item = toDoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.isCompleted ? .checkmark : .none
-            if let color = FlatMint().darken(byPercentage:CGFloat(indexPath.row) / CGFloat(toDoItems!.count)) {
+            if let color = UIColor(hexString: selectedList!.cellColor)?.darken(byPercentage:CGFloat(indexPath.row) / CGFloat(toDoItems!.count)) {
                 cell.backgroundColor = color
                 cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
             }

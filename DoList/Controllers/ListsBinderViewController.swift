@@ -13,7 +13,7 @@ import ChameleonFramework
 class ListsBinderViewController: SwipeTableViewController {
     
     var colorArray = NSArray(ofColorsWith: ColorScheme.complementary, using: FlatMint(), withFlatScheme: true)
-    let colors: [UIColor] = [FlatPowderBlue(), FlatMint(), FlatGreen(), FlatLime(), FlatWatermelon()]
+    let colors: [UIColor] = [FlatOrange(), FlatSkyBlue(), FlatGreen()]
     
     let realm = try! Realm()
 
@@ -24,9 +24,20 @@ class ListsBinderViewController: SwipeTableViewController {
         tableView.separatorStyle = .none
         loadLists()
         
+        
     }
     
-  
+    override func viewWillAppear(_ animated: Bool) {
+        guard let navBar = navigationController?.navigationBar else {fatalError("NavBar does not exist.")}
+        let navColor = FlatSand()
+        navBar.barTintColor = navColor
+        navBar.tintColor = ContrastColorOf(navColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navColor, returnFlat: true)]
+        
+    }
+
+    
+    
     //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,7 +48,9 @@ class ListsBinderViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let list = listsArray?[indexPath.row] {
             cell.textLabel?.text = list.name
-            cell.backgroundColor = UIColor(hexString: list.cellColor)
+            guard let listColor = UIColor(hexString: list.cellColor) else {fatalError()}
+            cell.backgroundColor = listColor
+            cell.textLabel?.textColor = ContrastColorOf(listColor, returnFlat: true)
         }
         return cell
     }
@@ -47,16 +60,18 @@ class ListsBinderViewController: SwipeTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToList", sender: self)
+        tableView.reloadData()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! ToDoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedList = listsArray?[indexPath.row]
-            destinationVC.title = listsArray?[indexPath.row].name
+            if let list = listsArray?[indexPath.row] {
+                destinationVC.selectedList = list
+            }
         }
-        
     }
     
     
@@ -101,15 +116,13 @@ class ListsBinderViewController: SwipeTableViewController {
         var textField = UITextField()
         let alert = UIAlertController(title: "Create New List", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default)
-       
         { (action) in
             guard textField.text != "" else { return }
             
             let newList = ToDoList()
             newList.name = textField.text!
-            print(self.listsArray?.count)
             if let indexPath = self.listsArray?.count {
-                let colorNumber = (indexPath % 5)
+                let colorNumber = (indexPath % 3)
                 let color = self.colors[colorNumber]
                 newList.cellColor = color.hexValue()
             }
